@@ -1,0 +1,17 @@
+{
+  "name": "db_load",
+  "version": "1.0.0",
+  "description": "Load restaurant_services.xlsx into MongoDB",
+  "main": "scripts/loadData.js",
+  "scripts": {
+    "load": "node scripts/loadData.js",
+    "serve": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
+    "mongoose": "^9.4.1",
+    "xlsx": "^0.18.5"
+  }
+}
