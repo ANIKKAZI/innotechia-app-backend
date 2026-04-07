@@ -14,7 +14,10 @@ const Inquiry   = require('./models/Inquiry');
 const MONGO_URI = process.env.MONGO_URI;
 const PORT      = parseInt(process.env.PORT || '3000', 10);
 // Allow Angular dev server (4200) and any production origin to call this API
-const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'http://localhost:4200').split(',');
+const ALLOWED_ORIGINS = (
+  process.env.ALLOWED_ORIGINS ||
+  'http://localhost:4200,https://innotechia-app.onrender.com'
+).split(',').map(o => o.trim()).filter(Boolean);
 
 const app = express();
 
@@ -186,7 +189,10 @@ app.post('/api/inquiries', async (req, res) => {
 // ── Bootstrap ─────────────────────────────────────────────────────────────────
 
 async function start() {
-  if (!MONGO_URI) throw new Error('MONGO_URI is not defined in your .env file.');
+  if (!MONGO_URI) {
+    console.error('FATAL: MONGO_URI environment variable is not set.');
+    throw new Error('MONGO_URI is not defined. Set it in your Render environment variables.');
+  }
 
   console.log('Connecting to MongoDB Atlas…');
   await mongoose.connect(MONGO_URI, {
